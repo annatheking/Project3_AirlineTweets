@@ -22,9 +22,12 @@ function init() {
   d3.select("#alertSuccess").attr("class", "alert alert-success alert-dismissable hide in fade");
   tbody.html('');
 
-  $.getJSON('/api/search', function (data) {
-    console.log(data.all_tweets);
-    console.log(data.tweet_words);
+  $.getJSON('/api/search', {
+    airline: 'All',
+    tweet: '',
+    tweetfrom: '',
+    tweetto: ''
+  }, function (data) {
     populateData(data.all_tweets);
     wordcloud(data.wordcloud_data);
     pieChart(data.piechart_data);
@@ -44,6 +47,7 @@ function wordcloud(wordsData) {
   else {
     $('#wordcloud').jQCloud(wordsData, {
       delay: 10,
+      autoResize: true,
       fontSize: {
         from: 0.6,
         to: 0.03
@@ -66,7 +70,7 @@ function pieChart(pieData) {
       hovermode: 'closest',
       margin: { t: 0 },
       height: 550,
-      width: 550
+      width: 650
     };
     Plotly.newPlot("piechart", data, layout);
 }

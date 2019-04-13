@@ -53,6 +53,34 @@ def wordCloud(tweet_words):
         item['weight']=v
         wordcount.append(item)
     return wordcount
+ 
+def searchQuery(searchParam,charttype):
+    try:
+        searchParam = request.args.to_dict()
+        print(searchParam)
+        # Query the Table
+        airline= searchParam['airline']
+        tweet=searchParam['tweet']
+        tweetfrom= searchParam['tweetfrom']
+        tweetto=searchParam['tweetto']
+        # ----------------------------------
+        if charttype=='none':
+            query=db.session.query(Tweets)
+            if airline!='All':
+                query = query.filter(Tweets.airline==airline) 
+            if tweet:
+                query = query.filter(Tweets.text.contains(tweet))
+        elif charttype=='pie':
+            query=db.session.query(Tweets.airline_sentiment,func.count(Tweets.airline_sentiment)) 
+            if airline!='All':
+                query = query.filter(Tweets.airline==airline) 
+            if tweet:
+                query = query.filter(Tweets.text.contains(tweet))
+            query=query.group_by(Tweets.airline_sentiment)
+    except:
+        # Return some sample data in case of error
+        query = db.session.query(Tweets).limit(25)
+    return query
         
 @app.route("/")
 def index():
@@ -60,28 +88,8 @@ def index():
 
 @app.route('/api/search/', methods=['GET'])
 def search():
-    try:
-        searchParam = request.args.to_dict()
-        print(searchParam)
-        # Query the Tables
-        airline= searchParam['airline']
-        
-        tweet=searchParam['tweet']
-        tweetfrom= searchParam['tweetfrom']
-        tweetto=searchParam['tweetto']
-        # ----------------------------------
-        query=db.session.query(Tweets)
-        if airline!='All':
-             query = query.filter(Tweets.airline==airline) 
-        if tweet:
-            query = query.filter(Tweets.text.contains(tweet))
-        #print(query)
-    except:
-        # Return some sample data in case of error
-        query = db.session.query(Tweets).limit(25)
-    
-    query2=query
-    results=query.all()
+    searchParam = request.args.to_dict()
+    results=searchQuery(searchParam,'none').all()
     all_tweets = []
     tweet_words=''
     for result in results:
@@ -98,12 +106,8 @@ def search():
     #Tokenize the words of each tweet to generate Word Cloud 
     #Word Cloud
     wordcloud_data=wordCloud(tweet_words)
-    
     #Pie chart
-    piechart_data=db.session.query(Tweets.airline_sentiment,func.count(Tweets.airline_sentiment)) \
-        .group_by(Tweets.airline_sentiment).all()
-    print(piechart_data)
-    
+    piechart_data=results=searchQuery(searchParam,'pie').all()
     # Format the data to send as json
     return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data)
      
