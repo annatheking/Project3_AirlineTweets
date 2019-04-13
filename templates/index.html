@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Twitter US Airline Sentiment</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel=stylesheet type=text/css href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700"
+		rel="stylesheet">
+	<link rel=stylesheet type=text/css href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+
+
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/open-iconic-bootstrap.min.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/animate.css') }}">
+
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+
+
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+
+
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/aos.css') }}">
+
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/ionicons.min.css') }}">
+
+
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/jquery.timepicker.css') }}">
+
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/flaticon.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/icomoon.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/jqcloud.min.css') }}">
+
+
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">Twitter US Airline Sentiment</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- END nav -->
+
+	<div class="hero-wrap js-fullheight" style="background-image: url('/static/images/bg_1.jpg');">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
+				data-scrollax-parent="true">
+				<div class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left"
+					data-scrollax=" properties: { translateY: '70%' }">
+					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Twitter<br>US
+						Airline
+						Sentiment</h1>
+					<p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Analyze how travelers in February
+						2015
+						expressed their feelings on Twitter
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section class="ftco-section justify-content-end ftco-search">
+		<div class="container-wrap ml-auto">
+			<div class="row no-gutters">
+				<div class="col-md-12 nav-link-wrap">
+					<div class="nav nav-pills justify-content-center text-center" id="v-pills-tab" role="tablist"
+						aria-orientation="vertical">
+						<a class="nav-link active" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab"
+							aria-controls="v-pills-1" aria-selected="true">Twitter US Airline Sentiment</a>
+					</div>
+				</div>
+				<div class="col-md-12 tab-wrap">
+					<div class="tab-content p-4 px-5" id="v-pills-tabContent">
+						<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
+							aria-labelledby="v-pills-nextgen-tab">
+							<form action="#" class="search-destination">
+								<div class="row">
+									<div class="col-md align-items-end">
+										<div class="form-group">
+											<label for="#">Air Line</label>
+											<div class="form-field">
+												<div class="select-wrap">
+													<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+													<select name="" id="airline" class="form-control">
+														<option value="All">ALL</option>
+														<option value="American">American</option>
+														<option value="Delta">Delta
+														</option>
+														<option value="Southwest">Southwest
+														</option>
+														<option value="United">United
+														</option>
+														<option value="US Airways">US Airways
+														</option>
+														<option value="Virgin America">Virgin America
+														</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md align-items-end">
+										<div class="form-group">
+											<label for="#">Tweet</label>
+											<div class="form-field">
+												<div class="icon"><span class="icon-plane"></span></div>
+												<input type="text" id="tweet" class="form-control" placeholder="Tweet">
+											</div>
+										</div>
+									</div>
+									<div class="col-md align-items-end">
+										<div class="form-group">
+											<label for="#">Tweet From</label>
+											<div class="form-field">
+												<div class="icon"><span class="icon-calendar"></span></div>
+												<input type="text" id="tweetfrom" class="form-control"
+													placeholder="Tweet From">
+											</div>
+										</div>
+									</div>
+									<div class="col-md align-items-end">
+										<div class="form-group">
+											<label for="#">Tweet To</label>
+											<div class="form-field">
+												<div class="icon"><span class="icon-calendar"></span></div>
+												<input type="text" id="tweetto" class="form-control"
+													placeholder="Tweet To">
+											</div>
+										</div>
+									</div>
+									<div class="col-md align-self-end">
+										<div class="form-group">
+											<div class="form-field">
+												<input type="submit" id="filter-btn" value="Search"
+													class="form-control btn btn-primary">
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+	<section class="ftco-section bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12  col-md-12">
+					<div class="alert alert-danger alert-dismissable hide in fade" role="alert" id="alertError">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<div id="alertErrorText"></div>
+					</div>
+					<div class="alert alert-success alert-dismissable hide in fade" role="alert" id="alertSuccess">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<div id="alertSuccessText"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12  col-md-12">
+					<div id="wordcloud" style="width: 550px;height: 550px; background: #000;text-align:center;">					
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12  col-md-12">
+					<div id="piechart">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12  col-md-12">
+					<div id="barchart">
+						<p>Bar Chart</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12  col-md-12">
+					<div id="linechart">
+						<p>Line Chart</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-section bg-light">
+		<div class="container">
+			<div class="row">
+				<div id="table-area" class="">
+					<table id="tweet-table" class="table table-striped">
+						<thead>
+							<tr>
+								<th class="table-head">Airline</th>
+								<th class="table-head">Tweet</th>
+								<th class="table-head">Sentiment</th>
+								<th class="table-head">Tweet Date</th>
+								<th class="table-head">Lat</th>
+								<th class="table-head">Lng</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-section bg-light">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="intro ftco-animate">
+						<h3>This data originally came from Crowdflower's Data for Everyone library.</h3>
+						<p>A sentiment analysis job about the problems of each major U.S. airline. Twitter data was
+							scraped from
+							February of 2015 and contributors were asked to first classify positive, negative, and
+							neutral tweets,
+							followed by categorizing negative reasons (such as "late flight" or "rude service").</p>
+					</div>
+				</div>
+			</div>
+	</section>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center mb-5 pb-3">
+				<div class="col-md-7 heading-section text-center ftco-animate">
+					<h2 class="mb-4">Visualization</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 ftco-animate">
+					<a href="#" class="destination-entry img"
+						style="background-image: url(/static/images/wordCloud.png);">
+						<div class="text text-center">
+							<h3>Word Cloud</h3>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-4 ftco-animate">
+					<a href="#" class="destination-entry img"
+						style="background-image: url(/static/images/pieChart.png);">
+						<div class="text text-center">
+							<h3>Pie Chart</h3>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-4 ftco-animate">
+					<a href="#" class="destination-entry img"
+						style="background-image: url(/static/images/barChart.png);">
+						<div class="text text-center">
+							<h3>Bar Chart</h3>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="ftco-about d-md-flex">
+		<div class="one-half img">
+			<img src="/static/images/twitter.png" />
+		</div>
+		<div class="one-half ftco-animate">
+			<div class="heading-section ftco-animate ">
+				<h2 class="mb-4">Description</h2>
+			</div>
+			<div>
+				<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would
+					have been
+					rewritten a thousand times and everything that was left from its origin would be the word "and" and
+					the Little
+					Blind Text should turn around and return to its own, safe country. But nothing the copy said could
+					convince
+					her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with
+					Longe and
+					Parole and dragged her into their agency, where they abused her for their.</p>
+			</div>
+		</div>
+	</section>
+	<footer class="ftco-footer ftco-bg-dark ftco-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<p>
+						Copyright &copy;
+						<script>document.write(new Date().getFullYear());</script>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- loader -->
+	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+				stroke="#F96D00" /></svg></div>
+
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery-migrate-3.0.1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.waypoints.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.stellar.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/aos.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.animateNumber.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/scrollax.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jqcloud.min.js') }}"></script>
+
+
+
+</body>
+
+</html>
