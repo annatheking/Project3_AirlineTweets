@@ -34,8 +34,6 @@
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/jqcloud.min.css') }}">
 
-
-
 </head>
 
 <body>
@@ -213,34 +211,41 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12  col-md-12">
-						<div class="panel panel-info">
-							<div class="panel-heading"><strong>Line Chart</strong></div>
-							<div class="panel-body">
-								<div id="linechart">
-								</div>
+					<div class="panel panel-info">
+						<div class="panel-heading"><strong>Line Chart</strong></div>
+						<div class="panel-body">
+							<div id="linechart">
 							</div>
 						</div>
 					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 	<section class="ftco-section bg-light">
 		<div class="container">
 			<div class="row">
-				<div id="table-area" class="">
-					<table id="tweet-table" class="table table-striped">
-						<thead>
-							<tr>
-								<th class="table-head">Airline</th>
-								<th class="table-head">Tweet</th>
-								<th class="table-head">Sentiment</th>
-								<th class="table-head">Tweet Date</th>
-								<th class="table-head">Lat</th>
-								<th class="table-head">Lng</th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
+				<div class="col-xs-12  col-md-12">
+					<div class="panel panel-info">
+						<div class="panel-heading"><strong>Data</strong></div>
+						<div class="panel-body">
+							<div id="table-area" class="">
+								<table id="tweet-table" class="table table-striped">
+									<thead>
+										<tr>
+											<th class="table-head">Airline</th>
+											<th class="table-head">Tweet</th>
+											<th class="table-head">Sentiment</th>
+											<th class="table-head">Tweet Date</th>
+											<th class="table-head">Lat</th>
+											<th class="table-head">Lng</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
