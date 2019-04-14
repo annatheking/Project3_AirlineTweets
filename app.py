@@ -75,6 +75,13 @@ def searchQuery(searchParam,charttype):
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
             query=query.group_by(Tweets.airline_sentiment)
+        elif charttype=='bar':
+            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,func.count(Tweets.airline_sentiment)) 
+            if airline!='All':
+                query = query.filter(Tweets.airline==airline) 
+            if tweet:
+                query = query.filter(Tweets.text.contains(tweet))
+            query=query.group_by(Tweets.airline,Tweets.airline_sentiment)
     except:
         # Return some sample data in case of error
         query = db.session.query(Tweets).limit(25)
@@ -87,7 +94,7 @@ def index():
 @app.route('/api/search/', methods=['GET'])
 def search():
     searchParam = request.args.to_dict()
-    results=searchQuery(searchParam,'none').all()
+    results=searchQuery(searchParam,'none').limit(50).all()
     all_tweets = []
     tweet_words=''
     for result in results:
@@ -105,9 +112,14 @@ def search():
     #Word Cloud
     wordcloud_data=wordCloud(tweet_words)
     #Pie chart
-    piechart_data=results=searchQuery(searchParam,'pie').all()
+    piechart_data=searchQuery(searchParam,'pie').all()
+    
+    #Bar chart
+    barchart_data=searchQuery(searchParam,'bar').all()
+    print(barchart_data)
+    
     # Format the data to send as json
-    return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data)
+    return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data,barchart_data=barchart_data)
      
 
 @app.route("/about")

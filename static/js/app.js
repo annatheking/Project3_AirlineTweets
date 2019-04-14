@@ -24,6 +24,7 @@ function init() {
     populateData(data.all_tweets);
     wordcloud(data.wordcloud_data);
     pieChart(data.piechart_data);
+    barChart(data.barchart_data);
   });
 
 }
@@ -68,11 +69,40 @@ function pieChart(pieData) {
     Plotly.newPlot("piechart", data, layout);
 }
 
-
 function barChart(barData) {
+
+  airline = [...new Set(barData.map(t=>t[0]))];
+  var trace1 = {
+    x: airline,
+    y: barData.filter(t => t[1]=='negative').map(t=> t[2]),
+    name: 'negative',
+    type: 'bar'
+  };
+  
+  var trace2 = {
+    x: airline,
+    y:  barData.filter(t => t[1]=='positive').map(t=> t[2]),
+    name: 'positive',
+    type: 'bar'
+  };
+  
+  var trace3 = {
+    x: airline,
+    y: barData.filter(t => t[1]=='neutral').map(t=> t[2]),
+    name: 'neutral',
+    type: 'bar'
+  };
+  
+  var data = [trace1, trace2,trace3];
+  
+  var layout = {
+    height: 550,
+    width: 650,
+    barmode: 'stack'
+  };
+  
+  Plotly.newPlot('barchart', data, layout);
 }
-
-
 
 
 // Complete the click handler for the form
@@ -95,6 +125,7 @@ submit.on("click", function () {
     populateData(data.all_tweets);
     wordcloud(data.wordcloud_data);
     pieChart(data.piechart_data);
+    barChart(data.barchart_data);
   });
 
 });
