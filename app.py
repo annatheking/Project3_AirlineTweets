@@ -61,8 +61,6 @@ def searchQuery(searchParam,charttype):
         # Query the Table
         airline= searchParam['airline']
         tweet=searchParam['tweet']
-        tweetfrom= searchParam['tweetfrom']
-        tweetto=searchParam['tweetto']
         # ----------------------------------
         if charttype=='none':
             query=db.session.query(Tweets)
@@ -98,8 +96,8 @@ def search():
         tweet["airline"] = result.airline
         tweet["tweet"] = result.text
         tweet["date"] = result.tweet_date
-        tweet["lat"] = 1#float(result.lat) 
-        tweet["lng"] = 2#float(result.lng) 
+        tweet["lat"] = float(result.lat) 
+        tweet["lng"] = float(result.lng) 
         tweet_words+=result.text
         all_tweets.append(tweet)
     

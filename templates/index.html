@@ -10,25 +10,13 @@
 		rel="stylesheet">
 	<link rel=stylesheet type=text/css href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
 
-
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/open-iconic-bootstrap.min.css') }}">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/animate.css') }}">
-
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
-
-
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/magnific-popup.css') }}">
-
-
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/aos.css') }}">
-
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/ionicons.min.css') }}">
-
-
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/jquery.timepicker.css') }}">
-
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/flaticon.css') }}">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/icomoon.css') }}">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
@@ -90,7 +78,7 @@
 							aria-labelledby="v-pills-nextgen-tab">
 							<form action="#" class="search-destination">
 								<div class="row">
-									<div class="col-md align-items-end">
+									<div class="col-md-2 align-items-end">
 										<div class="form-group">
 											<label for="#">Air Line</label>
 											<div class="form-field">
@@ -114,7 +102,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md align-items-end">
+									<div class="col-md-6 align-items-end">
 										<div class="form-group">
 											<label for="#">Tweet</label>
 											<div class="form-field">
@@ -123,27 +111,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md align-items-end">
-										<div class="form-group">
-											<label for="#">Tweet From</label>
-											<div class="form-field">
-												<div class="icon"><span class="icon-calendar"></span></div>
-												<input type="text" id="tweetfrom" class="form-control"
-													placeholder="Tweet From">
-											</div>
-										</div>
-									</div>
-									<div class="col-md align-items-end">
-										<div class="form-group">
-											<label for="#">Tweet To</label>
-											<div class="form-field">
-												<div class="icon"><span class="icon-calendar"></span></div>
-												<input type="text" id="tweetto" class="form-control"
-													placeholder="Tweet To">
-											</div>
-										</div>
-									</div>
-									<div class="col-md align-self-end">
+									<div class="col-md-3 align-self-end">
 										<div class="form-group">
 											<div class="form-field">
 												<input type="submit" id="filter-btn" value="Search"
@@ -151,7 +119,15 @@
 											</div>
 										</div>
 									</div>
+									<div class="col-md-1 align-self-end">
+										<div class="form-group">
+											<div class="form-field">
+												<div id="loaddiv" class="loader"></div>
+											</div>
+										</div>
+									</div>
 								</div>
+
 							</form>
 						</div>
 					</div>
@@ -339,7 +315,11 @@
 			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
 				stroke="#F96D00" /></svg></div>
 
-	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="https://code.jquery.com/jquery-3.4.0.min.js"
+		integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
 	<script src="{{ url_for('static', filename='js/jquery-migrate-3.0.1.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
@@ -350,7 +330,6 @@
 	<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/aos.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/jquery.animateNumber.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/scrollax.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 

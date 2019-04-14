@@ -3,20 +3,15 @@ var table = d3.select("#tweet-table");
 var tbody = d3.select("#tweet-table tbody");
 
 
+$(document).ajaxStart(function() {
+  $("#loaddiv").show();
+});
+
+$(document).ajaxComplete(function() {
+  $("#loaddiv").hide();
+});
+
 function init() {
-
-  var date = new Date();
-  date.setDate(date.getDate() + 30);
-
-  var year_val = 2015;
-  $('#tweetfrom, #tweetto').datepicker({
-    dateFormat: "yy-mm-dd",
-    autoclose: true,
-    format: "mm-yyyy",
-    viewMode: "months",
-    minViewMode: "months",
-    minDate: date
-  });
 
   d3.select("#alertError").attr("class", "alert alert-danger alert-dismissable hide in fade");
   d3.select("#alertSuccess").attr("class", "alert alert-success alert-dismissable hide in fade");
@@ -25,8 +20,6 @@ function init() {
   $.getJSON('/api/search', {
     airline: 'All',
     tweet: '',
-    tweetfrom: '',
-    tweetto: ''
   }, function (data) {
     populateData(data.all_tweets);
     wordcloud(data.wordcloud_data);
@@ -63,7 +56,7 @@ function pieChart(pieData) {
       values: pieData.map(t=>t[1]),
       text: pieData.map(t=>t[0]),
       hoverinfo: 'text+percent',
-      textinfo: 'percent',
+      textinfo: 'text+percent',
       type: 'pie'
     }];
     var layout = {
@@ -95,19 +88,9 @@ submit.on("click", function () {
   var tweet = d3.select("#tweet");
   var tweetValue = tweet.property("value");
 
-  // tweetfrom
-  var tweetfrom = d3.select("#tweetfrom");
-  var tweetfromValue = tweetfrom.property("value");
-
-  // tweetto
-  var tweetto = d3.select("#tweetto");
-  var tweettoValue = tweetto.property("value");
-
   $.getJSON('/api/search', {
     airline: airlineValue,
     tweet: tweetValue,
-    tweetfrom: tweetfromValue,
-    tweetto: tweettoValue
   }, function (data) {
     populateData(data.all_tweets);
     wordcloud(data.wordcloud_data);
