@@ -98,7 +98,27 @@ function barChart(barData) {
   var layout = {
     height: 550,
     width: 650,
-    barmode: 'stack'
+    barmode: 'stack',
+    xaxis: {
+      title: {
+        text: 'Airline',
+        font: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
+      },
+    },
+    yaxis: {
+      title: {
+        text: 'Tweet count',
+        font: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
+      }
+    }
   };
   
   Plotly.newPlot('barchart', data, layout);
@@ -145,7 +165,6 @@ function populateData(filteredData) {
     return;
   }
 
-  console.log(filteredData.length);
   table.attr("class", "table table-striped");
   d3.select("#alertSuccess").attr("class", "alert alert-success alert-dismissable");
   d3.select("#alertSuccessText").text(`${filteredData.length} record(s) found.`);
@@ -165,7 +184,11 @@ function populateData(filteredData) {
     var cell = row.append("td");
     cell.text(tweet.lng);
   });
-}
 
+  $('#tweet-table').dataTable( {
+    destroy: true,
+    "pageLength": 25
+  } );
+}
 
 init();

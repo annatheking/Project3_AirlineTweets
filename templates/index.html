@@ -21,6 +21,8 @@
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/icomoon.css') }}">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/jqcloud.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
 
 </head>
 
@@ -28,7 +30,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index.html">Twitter US Airline Sentiment</a>
+			<a class="navbar-brand" href="/">Twitter US Airline Sentiment</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
 				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
@@ -36,8 +38,8 @@
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-					<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+					<li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="/about" class="nav-link">About</a></li>
 				</ul>
 			</div>
 		</div>
@@ -127,7 +129,24 @@
 										</div>
 									</div>
 								</div>
-
+								<div class="row">
+									<div class="col-xs-12  col-md-12">
+										<div class="alert alert-danger alert-dismissable hide in fade" role="alert"
+											id="alertError">
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+											<div id="alertErrorText"></div>
+										</div>
+										<div class="alert alert-success alert-dismissable hide in fade" role="alert"
+											id="alertSuccess">
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+											<div id="alertSuccessText"></div>
+										</div>
+									</div>
+								</div>
 							</form>
 						</div>
 					</div>
@@ -138,26 +157,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12  col-md-12">
-					<div class="alert alert-danger alert-dismissable hide in fade" role="alert" id="alertError">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<div id="alertErrorText"></div>
-					</div>
-					<div class="alert alert-success alert-dismissable hide in fade" role="alert" id="alertSuccess">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<div id="alertSuccessText"></div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12  col-md-12">
 					<div class="panel panel-info">
 						<div class="panel-heading"><strong>Word Cloud</strong></div>
 						<div class="panel-body">
-							<div id="wordcloud" style="width: 650px;height: 550px; background: #000;text-align:center;">
+							<div id="wordcloud" class="inner">
 							</div>
 						</div>
 					</div>
@@ -168,7 +171,7 @@
 					<div class="panel panel-info">
 						<div class="panel-heading"><strong>Pie Chart</strong></div>
 						<div class="panel-body">
-							<div id="piechart">
+							<div id="piechart" class="inner">
 							</div>
 						</div>
 					</div>
@@ -179,7 +182,7 @@
 					<div class="panel panel-info">
 						<div class="panel-heading"><strong>Bar Chart</strong></div>
 						<div class="panel-body">
-							<div id="barchart">
+							<div id="barchart" class="inner">
 							</div>
 						</div>
 					</div>
@@ -190,7 +193,7 @@
 					<div class="panel panel-info">
 						<div class="panel-heading"><strong>Line Chart</strong></div>
 						<div class="panel-body">
-							<div id="linechart">
+							<div id="linechart" class="inner">
 							</div>
 						</div>
 					</div>
@@ -337,7 +340,7 @@
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/jqcloud.min.js') }}"></script>
-
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 
 
 </body>

@@ -37,6 +37,9 @@ Base.prepare(db.engine, reflect=True)
 Tweets = Base.classes.tweets
 
 def wordCloud(tweet_words):
+    '''
+    Tokenize the words of each tweet to generate Word Cloud 
+    '''
     word_tokens = tweet_words.split()
     filtered_sentence = [w for w in word_tokens if not w.lower() in stopwords]
     wordcount=[]
@@ -55,6 +58,9 @@ def wordCloud(tweet_words):
     return wordcount
  
 def searchQuery(searchParam,charttype):
+    '''
+     Create search query based on chart type
+    '''
     try:
         searchParam = request.args.to_dict()
         print(searchParam)
@@ -94,7 +100,7 @@ def index():
 @app.route('/api/search/', methods=['GET'])
 def search():
     searchParam = request.args.to_dict()
-    results=searchQuery(searchParam,'none').limit(50).all()
+    results=searchQuery(searchParam,'none').all()
     all_tweets = []
     tweet_words=''
     for result in results:
@@ -108,15 +114,12 @@ def search():
         tweet_words+=result.text
         all_tweets.append(tweet)
     
-    #Tokenize the words of each tweet to generate Word Cloud 
     #Word Cloud
     wordcloud_data=wordCloud(tweet_words)
     #Pie chart
     piechart_data=searchQuery(searchParam,'pie').all()
-    
     #Bar chart
     barchart_data=searchQuery(searchParam,'bar').all()
-    print(barchart_data)
     
     # Format the data to send as json
     return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data,barchart_data=barchart_data)

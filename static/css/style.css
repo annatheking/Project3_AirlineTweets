@@ -153,7 +153,11 @@ a:not([href]):not([tabindex]) {
   a:not([href]):not([tabindex]):focus {
     outline: 0; }
 
-
+  .inner {
+      width: 50%;
+      height: 550px;
+      margin: 0 auto;
+  }
     .panel {
       margin-bottom: 20px;
       background-color: #fff;
@@ -164,6 +168,7 @@ a:not([href]):not([tabindex]) {
     }
     .panel-body {
       padding: 15px;
+      text-align: center;
     }
     .panel-heading {
       padding: 10px 15px;
@@ -8019,9 +8024,7 @@ h1, h2, h3, h4, h5,
       padding: 0 !important; } }
   .ftco-search .container-wrap {
     z-index: 1; }
-    @media (min-width: 768px) {
-      .ftco-search .container-wrap {
-        width: 89%; } }
+
 
 .ftco-search {
   position: relative;
