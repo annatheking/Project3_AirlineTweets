@@ -1,8 +1,8 @@
 import os
+import json
 
 import pandas as pd
 import numpy as np
-
 import sqlalchemy
 
 from sqlalchemy.ext.automap import automap_base
@@ -75,19 +75,27 @@ def searchQuery(searchParam,charttype):
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
         elif charttype=='pie':
-            query=db.session.query(Tweets.airline_sentiment,func.count(Tweets.airline_sentiment)) 
+            query=db.session.query(Tweets.airline_sentiment,func.count(Tweets.airline_sentiment).label('count')) 
             if airline!='All':
                 query = query.filter(Tweets.airline==airline) 
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
             query=query.group_by(Tweets.airline_sentiment)
         elif charttype=='bar':
-            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,func.count(Tweets.airline_sentiment)) 
+            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,func.count(Tweets.airline_sentiment).label('count')) 
             if airline!='All':
                 query = query.filter(Tweets.airline==airline) 
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
             query=query.group_by(Tweets.airline,Tweets.airline_sentiment)
+        elif charttype=='map':
+            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,
+                               Tweets.lat,Tweets.lng).filter(Tweets.lat!=0).filter(Tweets.lng!=0) 
+            if airline!='All':
+                query = query.filter(Tweets.airline==airline) 
+            if tweet:
+                query = query.filter(Tweets.text.contains(tweet))
+
     except:
         # Return some sample data in case of error
         query = db.session.query(Tweets).limit(25)
@@ -100,7 +108,8 @@ def index():
 @app.route('/api/search/', methods=['GET'])
 def search():
     searchParam = request.args.to_dict()
-    results=searchQuery(searchParam,'none').all()
+    #Data
+    results=searchQuery(searchParam,'none').limit(25).all()
     all_tweets = []
     tweet_words=''
     for result in results:
@@ -113,17 +122,39 @@ def search():
         tweet["lng"] = float(result.lng) 
         tweet_words+=result.text
         all_tweets.append(tweet)
-    
     #Word Cloud
     wordcloud_data=wordCloud(tweet_words)
     #Pie chart
-    piechart_data=searchQuery(searchParam,'pie').all()
+    results=searchQuery(searchParam,'pie').all()
+    piechart_data=[]
+    for result in results:
+        tweet= {}
+        tweet["sentiment"] = result.airline_sentiment
+        tweet["count"] = result.count
+        piechart_data.append(tweet)
     #Bar chart
-    barchart_data=searchQuery(searchParam,'bar').all()
-    
+    results=searchQuery(searchParam,'bar').all()
+    barchart_data=[]
+    for result in results:
+        tweet= {}
+        tweet["sentiment"] = result.airline_sentiment
+        tweet["airline"] = result.airline
+        tweet["count"] = result.count
+        barchart_data.append(tweet)
+    #Map
+    results=searchQuery(searchParam,'map').all()
+    map_data = []
+    for result in results:
+        tweet= {}
+        tweet["sentiment"] = result.airline_sentiment
+        tweet["airline"] = result.airline
+        tweet["lat"] = float(result.lat) 
+        tweet["lng"] = float(result.lng) 
+        map_data.append(tweet)
     # Format the data to send as json
-    return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data,barchart_data=barchart_data)
-     
+    return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data,
+                barchart_data=barchart_data,map_data=map_data)
+
 
 @app.route("/about")
 def names():
