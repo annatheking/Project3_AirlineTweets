@@ -25,7 +25,8 @@ function init() {
     wordcloud(data.wordcloud_data);
     pieChart(data.piechart_data);
     barChart(data.barchart_data);
-  });
+    lineChart(data.linechart_data);
+});
 
 }
 
@@ -53,9 +54,9 @@ function wordcloud(wordsData) {
 function pieChart(pieData) {
     //Pie chart
     data = [{
-      labels: pieData.map(t=>t[0]),
-      values: pieData.map(t=>t[1]),
-      text: pieData.map(t=>t[0]),
+      labels: pieData.map(t=>t.sentiment),
+      values: pieData.map(t=>t.count),
+      text: pieData.map(t=>t.sentiment),
       hoverinfo: 'text+percent',
       textinfo: 'text+percent',
       type: 'pie'
@@ -71,24 +72,24 @@ function pieChart(pieData) {
 
 function barChart(barData) {
 
-  airline = [...new Set(barData.map(t=>t[0]))];
+  airline = [...new Set(barData.map(t=>t.airline))];
   var trace1 = {
     x: airline,
-    y: barData.filter(t => t[1]=='negative').map(t=> t[2]),
+    y: barData.filter(t => t.sentiment=='negative').map(t=> t.count),
     name: 'negative',
     type: 'bar'
   };
   
   var trace2 = {
     x: airline,
-    y:  barData.filter(t => t[1]=='positive').map(t=> t[2]),
+    y:  barData.filter(t => t.sentiment=='positive').map(t=> t.count),
     name: 'positive',
     type: 'bar'
   };
   
   var trace3 = {
     x: airline,
-    y: barData.filter(t => t[1]=='neutral').map(t=> t[2]),
+    y: barData.filter(t => t.sentiment=='neutral').map(t=> t.count),
     name: 'neutral',
     type: 'bar'
   };
@@ -124,6 +125,33 @@ function barChart(barData) {
   Plotly.newPlot('barchart', data, layout);
 }
 
+function lineChart(lineData) {
+  var trace1 = {
+    x: lineData.filter(t => t.sentiment=='negative').map(t=> t.date),
+    y: lineData.filter(t => t.sentiment=='negative').map(t=> t.count),
+    name: 'negative',
+    type: 'line'
+  };
+  
+  var trace2 = {
+    x: lineData.filter(t => t.sentiment=='positive').map(t=> t.date),
+    y: lineData.filter(t => t.sentiment=='positive').map(t=> t.count),
+    name: 'positive',
+    type: 'line'
+  };
+  
+  var trace3 = {
+    x: lineData.filter(t => t.sentiment=='neutral').map(t=> t.date),
+    y: lineData.filter(t => t.sentiment=='neutral').map(t=> t.count),
+    name: 'neutral',
+    type: 'line'
+  };
+  
+  var data = [trace1, trace2,trace3];
+  var layout ={};
+
+  Plotly.newPlot('linechart', data, layout);
+}
 
 // Complete the click handler for the form
 submit.on("click", function () {
@@ -146,6 +174,7 @@ submit.on("click", function () {
     wordcloud(data.wordcloud_data);
     pieChart(data.piechart_data);
     barChart(data.barchart_data);
+    lineChart(data.linechart_data);
   });
 
 });
