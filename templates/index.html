@@ -22,8 +22,6 @@
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/jqcloud.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
-
-
 </head>
 
 <body>
@@ -39,6 +37,7 @@
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="/map" class="nav-link">Tweet Map</a></li>
 					<li class="nav-item"><a href="/about" class="nav-link">About</a></li>
 				</ul>
 			</div>
@@ -320,10 +319,10 @@
 
 	<script src="https://code.jquery.com/jquery-3.4.0.min.js"
 		integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
 		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 
-	<script src="{{ url_for('static', filename='js/jquery-migrate-3.0.1.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
@@ -335,7 +334,6 @@
 	<script src="{{ url_for('static', filename='js/jquery.animateNumber.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/scrollax.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<script src="{{ url_for('static', filename='js/app.js') }}"></script>

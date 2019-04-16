@@ -88,14 +88,6 @@ def searchQuery(searchParam,charttype):
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
             query=query.group_by(Tweets.airline,Tweets.airline_sentiment)
-        elif charttype=='map':
-            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,
-                               Tweets.lat,Tweets.lng).filter(Tweets.lat!=0).filter(Tweets.lng!=0) 
-            if airline!='All':
-                query = query.filter(Tweets.airline==airline) 
-            if tweet:
-                query = query.filter(Tweets.text.contains(tweet))
-
     except:
         # Return some sample data in case of error
         query = db.session.query(Tweets).limit(25)
@@ -141,23 +133,33 @@ def search():
         tweet["airline"] = result.airline
         tweet["count"] = result.count
         barchart_data.append(tweet)
+    # Format the data to send as json
+    return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data,
+                barchart_data=barchart_data)
+
+@app.route('/api/map/', methods=['GET'])
+def mapapi():
     #Map
-    results=searchQuery(searchParam,'map').all()
+    query=db.session.query(Tweets.airline,Tweets.airline_sentiment,Tweets.text,
+                               Tweets.lat,Tweets.lng).filter(Tweets.lat!=0).filter(Tweets.lng!=0) 
+    results=query.all()
     map_data = []
     for result in results:
         tweet= {}
         tweet["sentiment"] = result.airline_sentiment
         tweet["airline"] = result.airline
+        tweet["text"] = result.text
         tweet["lat"] = float(result.lat) 
         tweet["lng"] = float(result.lng) 
         map_data.append(tweet)
-    # Format the data to send as json
-    return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data,
-                barchart_data=barchart_data,map_data=map_data)
-
+    return jsonify(map_data=map_data)
+    
+@app.route("/map")
+def map():
+    return render_template("map.html")
 
 @app.route("/about")
-def names():
+def about():
     return render_template("about.html")
 
 if __name__ == "__main__":

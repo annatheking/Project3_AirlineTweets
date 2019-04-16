@@ -124,7 +124,6 @@ function barChart(barData) {
   Plotly.newPlot('barchart', data, layout);
 }
 
-
 // Complete the click handler for the form
 submit.on("click", function () {
   // Prevent the page from refreshing
