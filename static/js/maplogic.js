@@ -1,9 +1,7 @@
 var usCoords = [37.090240,-95.712891];
 var mapZoomLevel = 5;
 
-
 function createMap(tweets) {
-
   // Adding tile layer
   var streetmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -64,8 +62,10 @@ function chooseIcon(sentiment){
     return redIcon
 }
 
+/**
+ * Create custom marker per tweet sentiment
+ */
 function createMarkers(response) {
-
   // Initialize an array to hold bike markers
   var tweets = [];
   // Loop through the stations array
@@ -80,5 +80,7 @@ function createMarkers(response) {
 }
 
 
-//The USGS provides earthquake data in a number of different formats, Updated every day.
+/**
+ * Get the data from the AirlineTwitter database
+ */
 d3.json("/api/map").then(createMarkers);
