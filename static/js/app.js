@@ -99,7 +99,6 @@ function barChart(barData) {
   var layout = {
     height: 550,
     width: 650,
-    barmode: 'stack',
     xaxis: {
       title: {
         text: 'Airline',
@@ -126,6 +125,7 @@ function barChart(barData) {
 }
 
 function lineChart(lineData) {
+  console.log(lineData)
   var trace1 = {
     x: lineData.filter(t => t.sentiment=='negative').map(t=> t.date),
     y: lineData.filter(t => t.sentiment=='negative').map(t=> t.count),
@@ -148,7 +148,30 @@ function lineChart(lineData) {
   };
   
   var data = [trace1, trace2,trace3];
-  var layout ={};
+  var layout ={
+    height: 550,
+    width: 650,
+    xaxis: {
+      title: {
+        text: 'Date tweet',
+        font: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
+      },
+    },
+    yaxis: {
+      title: {
+        text: 'Tweet count',
+        font: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
+      }
+    }
+  };
 
   Plotly.newPlot('linechart', data, layout);
 }

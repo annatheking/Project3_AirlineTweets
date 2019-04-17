@@ -8,6 +8,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine,func
+#from sqlalchemy import desc
 
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, jsonify, render_template
@@ -97,12 +98,14 @@ def searchQuery(searchParam,charttype):
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
         elif charttype=='line':
-            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,func.count(Tweets.airline_sentiment).label('count'),Tweets.tweet_date) 
+            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,Tweets.tweet_date,func.count(Tweets.airline_sentiment).label('count')) 
             if airline!='All':
-                query = query.filter(Tweets.airline==airline) 
+                query=query.filter(Tweets.airline==airline) 
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
-            query=query.group_by(Tweets.airline,Tweets.airline_sentiment)
+            query=query.group_by(Tweets.tweet_date,Tweets.airline_sentiment,Tweets.airline)
+            query=query.order_by(Tweets.tweet_date.desc())
+       
 
     except:
         # Return some sample data in case of error
@@ -170,9 +173,12 @@ def search():
         tweet["date"] = result.tweet_date
         tweet["count"] = result.count
         linechart_data.append(tweet)
+
+
     # Format the data to send as json
     return jsonify(all_tweets=all_tweets,wordcloud_data=wordcloud_data,piechart_data=piechart_data,
-                barchart_data=barchart_data,map_data=map_data, linechart_data=linechart_data)
+                barchart_data=barchart_data,map_data=map_data,linechart_data=linechart_data)
+    """ , linechart_data=linechart_data """
 
 
 @app.route("/about")
