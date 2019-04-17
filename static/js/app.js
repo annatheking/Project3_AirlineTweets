@@ -17,12 +17,12 @@ function init() {
   d3.select("#alertError").attr("class", "alert alert-danger alert-dismissable hide in fade");
   d3.select("#alertSuccess").attr("class", "alert alert-success alert-dismissable hide in fade");
   tbody.html('');
-  apiCall('All','');
+  apiCall('All', '');
 }
 /**
  *  API Call
  */
-function apiCall(airlineValue,tweetValue) {
+function apiCall(airlineValue, tweetValue) {
 
   $("#loaddivData").show();
   $.getJSON('/api/data', {
@@ -176,28 +176,28 @@ function barChart(barData) {
  */
 function lineChart(lineData) {
   var trace1 = {
-    x: lineData.filter(t => t.sentiment=='negative').map(t=> t.date),
-    y: lineData.filter(t => t.sentiment=='negative').map(t=> t.count),
+    x: lineData.filter(t => t.sentiment == 'negative').map(t => t.date),
+    y: lineData.filter(t => t.sentiment == 'negative').map(t => t.count),
     name: 'negative',
     type: 'line'
   };
-  
+
   var trace2 = {
-    x: lineData.filter(t => t.sentiment=='positive').map(t=> t.date),
-    y: lineData.filter(t => t.sentiment=='positive').map(t=> t.count),
+    x: lineData.filter(t => t.sentiment == 'positive').map(t => t.date),
+    y: lineData.filter(t => t.sentiment == 'positive').map(t => t.count),
     name: 'positive',
     type: 'line'
   };
-  
+
   var trace3 = {
-    x: lineData.filter(t => t.sentiment=='neutral').map(t=> t.date),
-    y: lineData.filter(t => t.sentiment=='neutral').map(t=> t.count),
+    x: lineData.filter(t => t.sentiment == 'neutral').map(t => t.date),
+    y: lineData.filter(t => t.sentiment == 'neutral').map(t => t.count),
     name: 'neutral',
     type: 'line'
   };
-  
-  var data = [trace1, trace2,trace3];
-  var layout ={
+
+  var data = [trace1, trace2, trace3];
+  var layout = {
     height: 550,
     width: 650,
     xaxis: {
@@ -240,8 +240,9 @@ submit.on("click", function () {
   var tweet = d3.select("#tweet");
   var tweetValue = tweet.property("value");
 
-  apiCall(airlineValue,tweetValue);
+  apiCall(airlineValue, tweetValue);
 });
+
 
 /**
  * Populate grid
@@ -265,6 +266,8 @@ function populateData(filteredData) {
   d3.select("#alertSuccess").attr("class", "alert alert-success alert-dismissable");
   d3.select("#alertSuccessText").text(`${filteredData.length} record(s) found.`);
 
+  $("#tweet-table").dataTable().fnDestroy();
+
   filteredData.forEach((tweet) => {
     var row = tbody.append("tr");
     var cell = row.append("td");
@@ -283,7 +286,9 @@ function populateData(filteredData) {
 
   $('#tweet-table').dataTable({
     destroy: true,
-    "pageLength": 25
+    pageLength: 25,
+    paging: true,
+ 
   });
 }
 

@@ -69,8 +69,11 @@ def searchQuery(searchParam,charttype):
         # ----------------------------------
         if charttype=='data':
             query=db.session.query(Tweets)
+            if airline=='All' and tweet=='':
+                #Only top 50 rows
+                query=query.limit(50)
             if airline!='All':
-                query = query.filter(Tweets.airline==airline) 
+                query = query.filter(Tweets.airline==airline)
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
         elif charttype=='wordcloud':
@@ -115,6 +118,7 @@ Data
 def data():
     searchParam = request.args.to_dict()
     #Data
+    
     results=searchQuery(searchParam,'data').all()
     all_tweets = []
     tweet_words=''
