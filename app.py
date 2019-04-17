@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import numpy as np
 import sqlalchemy
+from datetime import datetime
 
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -86,7 +87,8 @@ def searchQuery(searchParam,charttype):
                 query = query.filter(Tweets.text.contains(tweet))
             query=query.group_by(Tweets.airline_sentiment)
         elif charttype=='bar':
-            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,func.count(Tweets.airline_sentiment).label('count')) 
+            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,
+                            func.count(Tweets.airline_sentiment).label('count')) 
             if airline!='All':
                 query = query.filter(Tweets.airline==airline) 
             if tweet:
@@ -187,12 +189,16 @@ def line():
     results=searchQuery(searchParam,'line').all()
     linechart_data=[]
     for result in results:
-        tweet= {}
-        tweet["sentiment"] = result.airline_sentiment
-        tweet["airline"] = result.airline
-        tweet["date"] = result.tweet_date
-        tweet["count"] = result.count
-        linechart_data.append(tweet)
+        try:
+            if datetime.strptime(str(result.tweet_date), '%m/%d/%Y'):
+                tweet= {}
+                tweet["sentiment"] = result.airline_sentiment
+                tweet["airline"] = result.airline
+                tweet["date"] = result.tweet_date
+                tweet["count"] = result.count
+                linechart_data.append(tweet)
+        except ValueError:
+             pass
     return jsonify(linechart_data=linechart_data)
 
 '''
