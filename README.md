@@ -6,14 +6,14 @@ Visualizations of how travelers in February 2015 expressed their feelings on Twi
   
   
 
-# Front end:  
+# Front end (App.js)(maplogic.js):  
 JQuery  
 D3  
 Plotly  
 Leaflet  
   
   
-# Back end:  
+# Back end (App.py):  
 Flask  
 SQLAlchemy  
 MySql  
