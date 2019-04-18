@@ -68,6 +68,16 @@ function apiCall(airlineValue, tweetValue) {
     lineChart(data.linechart_data);
     $("#loaddivLine").hide();
   });
+
+  $("#loaddivBubble").show();
+  $.getJSON('/api/bubble', {
+    airline: airlineValue,
+    tweet: tweetValue
+  }, function (data) {
+    bubbleChart(data.bubblechart_data);
+    $("#loaddivBubble").hide();
+  });
+
 }
 /**
  * Word Cloud
@@ -97,13 +107,19 @@ function wordcloud(wordsData) {
  */
 function pieChart(pieData) {
   //Pie chart
+
+  var ultimateColors = ['red', 'orange', 'green'];
+
   data = [{
     labels: pieData.map(t => t.sentiment),
     values: pieData.map(t => t.count),
     text: pieData.map(t => t.sentiment),
     hoverinfo: 'text+percent',
     textinfo: 'text+percent',
-    type: 'pie'
+    type: 'pie',
+    marker: {
+      colors: ultimateColors
+    },
   }];
   var layout = {
     hovermode: 'closest',
@@ -119,25 +135,36 @@ function pieChart(pieData) {
  */
 function barChart(barData) {
   airline = [...new Set(barData.map(t => t.airline))];
+
   var trace1 = {
     x: airline,
     y: barData.filter(t => t.sentiment == 'negative').map(t => t.count),
     name: 'negative',
-    type: 'bar'
+    type: 'bar',
+    marker: {
+      color: 'red'
+    }
+
   };
 
   var trace2 = {
     x: airline,
-    y: barData.filter(t => t.sentiment == 'positive').map(t => t.count),
-    name: 'positive',
-    type: 'bar'
+    y: barData.filter(t => t.sentiment == 'neutral').map(t => t.count),
+    name: 'neutral',
+    type: 'bar',
+    marker: {
+      color: 'orange'
+    }
   };
 
   var trace3 = {
     x: airline,
-    y: barData.filter(t => t.sentiment == 'neutral').map(t => t.count),
-    name: 'neutral',
-    type: 'bar'
+    y: barData.filter(t => t.sentiment == 'positive').map(t => t.count),
+    name: 'positive',
+    type: 'bar',
+    marker: {
+      color: 'green'
+    }
   };
 
   var data = [trace1, trace2, trace3];
@@ -179,21 +206,30 @@ function lineChart(lineData) {
     x: lineData.filter(t => t.sentiment == 'negative').map(t => t.date),
     y: lineData.filter(t => t.sentiment == 'negative').map(t => t.count),
     name: 'negative',
-    type: 'line'
+    type: 'line',
+    marker: {
+      color: 'red'
+    }
   };
 
   var trace2 = {
-    x: lineData.filter(t => t.sentiment == 'positive').map(t => t.date),
-    y: lineData.filter(t => t.sentiment == 'positive').map(t => t.count),
-    name: 'positive',
-    type: 'line'
-  };
-
-  var trace3 = {
     x: lineData.filter(t => t.sentiment == 'neutral').map(t => t.date),
     y: lineData.filter(t => t.sentiment == 'neutral').map(t => t.count),
     name: 'neutral',
-    type: 'line'
+    type: 'line',
+    marker: {
+      color: 'orange'
+    }
+  };
+
+  var trace3 = {
+    x: lineData.filter(t => t.sentiment == 'positive').map(t => t.date),
+    y: lineData.filter(t => t.sentiment == 'positive').map(t => t.count),
+    name: 'positive',
+    type: 'line',
+    marker: {
+      color: 'green'
+    }
   };
 
   var data = [trace1, trace2, trace3];
@@ -224,6 +260,38 @@ function lineChart(lineData) {
 
   Plotly.newPlot('linechart', data, layout);
 }
+
+/**
+ * Bubble Chart
+ */
+function bubbleChart(bubbleData) {
+  var bubble_size = bubbleData.map(t => t.TweetCount / 18);
+  var bubble_count = bubbleData.map(t => t.TweetCount);
+
+  console.log(bubble_size);
+  var trace = {
+    x: bubbleData.map(t => t.Airline),
+    y: bubbleData.map(t => t.WeekDay),
+    text: bubble_count,
+    // hoverinfo: 'hovertext',
+    mode: 'markers',
+    marker: {
+      size: bubble_size,
+      color: bubble_size
+    }
+  };
+  var data = [trace];
+  var layout = {
+    showlegend: false,
+    height: 550,
+    width: 700,
+    xaxis: { title: "Airline" },
+    yaxis: { title: "Week Day" }
+  };
+
+  Plotly.newPlot('bubblechart', data, layout);
+}
+
 
 /**
  * Complete the click handler for the form
@@ -288,7 +356,7 @@ function populateData(filteredData) {
     destroy: true,
     pageLength: 25,
     paging: true,
- 
+
   });
 }
 

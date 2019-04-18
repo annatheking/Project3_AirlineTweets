@@ -1,13 +1,13 @@
-var usCoords = [37.090240,-95.712891];
+var usCoords = [37.090240, -95.712891];
 var mapZoomLevel = 5;
 
 function createMap(tweets) {
   // Adding tile layer
   var streetmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-  maxZoom: 18,
-  id: "mapbox.streets",
-  accessToken: "pk.eyJ1IjoiYXJsZW5tYXAiLCJhIjoiY2p0dWxydjRmMWZpcDN5cGVsNXU4aWZzbSJ9.amgRRDDH7ctER8j5VE65Gw"
+    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    maxZoom: 18,
+    id: "mapbox.streets",
+    accessToken: "pk.eyJ1IjoiYXJsZW5tYXAiLCJhIjoiY2p0dWxydjRmMWZpcDN5cGVsNXU4aWZzbSJ9.amgRRDDH7ctER8j5VE65Gw"
   });
 
   // Create a baseMaps object to hold the Street layer
@@ -34,7 +34,7 @@ function createMap(tweets) {
 
 }
 
-function chooseIcon(sentiment){
+function chooseIcon(sentiment) {
   var greenIcon = L.icon({
     iconUrl: '/static/images/leaf-green.png',
     iconSize: [32, 37],
@@ -54,9 +54,9 @@ function chooseIcon(sentiment){
     popupAnchor: [0, -28]
   });
 
-  if(sentiment=='positive')
+  if (sentiment == 'positive')
     return greenIcon;
-  else if (sentiment=='neutral')
+  else if (sentiment == 'neutral')
     return orangeIcon;
   else
     return redIcon
@@ -70,7 +70,7 @@ function createMarkers(response) {
   var tweets = [];
   // Loop through the stations array
   response.map_data.forEach(tweet => {
-    var objtweet = L.marker([tweet.lat, tweet.lng],{icon: chooseIcon(tweet.sentiment)})
+    var objtweet = L.marker([tweet.lat, tweet.lng], { icon: chooseIcon(tweet.sentiment) })
       .bindPopup(`<h3>${tweet.airline}</h3><h4>${tweet.sentiment}</h4><h5>${tweet.text}</h5>`);
     tweets.push(objtweet);
   })

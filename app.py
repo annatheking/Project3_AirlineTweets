@@ -204,6 +204,14 @@ def line():
     return jsonify(linechart_data=linechart_data)
 
 '''
+Bubble Chart
+'''
+@app.route('/api/bubble', methods=['GET'])
+def bubble():
+    result=db.engine.execute("call sp_bubblechart()").fetchall()
+    return jsonify({'bubblechart_data': [dict(row) for row in result]})
+
+'''
 Map 
 '''
 @app.route('/api/map/', methods=['GET'])
@@ -222,8 +230,7 @@ def mapapi():
         tweet["lng"] = float(result.lng) 
         map_data.append(tweet)
     return jsonify(map_data=map_data)
- 
-            
+           
 @app.route("/")
 def index():
     return render_template("index.html")
