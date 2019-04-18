@@ -98,13 +98,13 @@ def searchQuery(searchParam,charttype):
                 query = query.filter(Tweets.text.contains(tweet))
             query=query.group_by(Tweets.airline,Tweets.airline_sentiment)
         elif charttype=='line':     
-            query=db.session.query(Tweets.airline,Tweets.airline_sentiment,Tweets.tweet_date,
+            query=db.session.query(Tweets.airline_sentiment,Tweets.tweet_date,
                                                            func.count(Tweets.airline_sentiment).label('count')) 
             if airline!='All':
                 query=query.filter(Tweets.airline==airline) 
             if tweet:
                 query = query.filter(Tweets.text.contains(tweet))
-            query=query.group_by(Tweets.tweet_date,Tweets.airline_sentiment,Tweets.airline)
+            query=query.group_by(Tweets.tweet_date,Tweets.airline_sentiment)
             query=query.order_by(Tweets.tweet_date.desc())
     except:
         # Return some sample data in case of error
@@ -195,7 +195,7 @@ def line():
             if datetime.strptime(str(result.tweet_date), '%m/%d/%Y'):
                 tweet= {}
                 tweet["sentiment"] = result.airline_sentiment
-                tweet["airline"] = result.airline
+                #tweet["airline"] = result.airline
                 tweet["date"] = result.tweet_date
                 tweet["count"] = result.count
                 linechart_data.append(tweet)
