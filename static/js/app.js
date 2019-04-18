@@ -125,7 +125,7 @@ function pieChart(pieData) {
     hovermode: 'closest',
     margin: { t: 0 },
     height: 550,
-    width: 650
+    width: 700
   };
   Plotly.newPlot("piechart", data, layout);
 }
@@ -171,7 +171,7 @@ function barChart(barData) {
 
   var layout = {
     height: 550,
-    width: 650,
+    width: 700,
     barmode: 'stack',
     xaxis: {
       title: {
@@ -235,7 +235,7 @@ function lineChart(lineData) {
   var data = [trace1, trace2, trace3];
   var layout = {
     height: 550,
-    width: 650,
+    width: 700,
     xaxis: {
       title: {
         text: 'Date tweet',
