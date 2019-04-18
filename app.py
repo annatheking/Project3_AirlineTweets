@@ -118,7 +118,6 @@ Data
 def data():
     searchParam = request.args.to_dict()
     #Data
-    
     results=searchQuery(searchParam,'data').all()
     all_tweets = []
     tweet_words=''
@@ -154,7 +153,6 @@ Pie Chart
 @app.route('/api/pie', methods=['GET'])
 def pie():
     searchParam = request.args.to_dict()
-    print(searchParam)
     #Pie chart
     results=searchQuery(searchParam,'pie').all()
     piechart_data=[]
